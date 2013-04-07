@@ -3,10 +3,10 @@
 	<persistence-unit name="HawServer">
 		<class>com.hawserver.mensaplan.model.MenuItem</class>
 		<properties>
-			<property name="eclipselink.jdbc.password" value="hawserver"/>
-			<property name="eclipselink.jdbc.user" value="hawserver"/>
-			<property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-			<property name="eclipselink.jdbc.url" value="jdbc:mysql://localhost:3306/hawserver"/>
+			<property name="javax.persistence.jdbc.password" value="hawserver"/>
+			<property name="javax.persistence.jdbc.user" value="hawserver"/>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/hawserver"/>
 		</properties>
 	</persistence-unit>
 </persistence>
