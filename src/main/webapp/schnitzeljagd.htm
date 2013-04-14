@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<script type="text/javascript" src="js/knockout-2.2.1.js"></script>
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/style.css"/>
+</head>
+<body>
+<h1>Schnitzeljagd Administration</h1>
+<h2>Schnitzeljagden</h2>
+<ul data-bind="foreach: schnitzeljagden">
+	<li>
+		<span data-bind="text: id"></span>: <input data-bind="value: name"></span>
+		<a data-bind="click: save" href="#">Save</a>
+		<a data-bind="click: remove" href="#">Remove</a>
+	</li>
+</ul>
+<h2>Add Schnitzeljagd</h2>
+<form data-bind="submit: addSchnitzeljagd">
+	<input data-bind="value: newSchnitzeljagdName" placeholder="New Schnitzeljagd" />
+	<button type="submit">Add</button>
+</form>
+<script type="text/javascript" src="js/schnitzeljagd.js"></script>
+</body>
+</html>
