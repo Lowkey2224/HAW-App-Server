@@ -28,6 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Ziel.findByLongitude", query = "SELECT z FROM Ziel z WHERE z.longitude = :longitude"),
     @NamedQuery(name = "Ziel.findByLatitude", query = "SELECT z FROM Ziel z WHERE z.latitude = :latitude"),
     @NamedQuery(name = "Ziel.findByCode", query = "SELECT z FROM Ziel z WHERE z.code = :code"),
+    @NamedQuery(name = "Ziel.findBySchnitzeljagdId", query = "SELECT z FROM Ziel z WHERE z.schnitzeljagdId = :schnitzeljagdId"),
     @NamedQuery(name = "Ziel.deleteById", query = "DELETE FROM Ziel z WHERE z.id = :id")})
 public class Ziel implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -45,6 +46,8 @@ public class Ziel implements Serializable {
     private Double latitude;
     @Column(name = "Code")
     private String code;
+    @Column(name = "Radius")
+    private Double radius;
     @JoinColumn(name = "SchnitzeljagdId", referencedColumnName = "id")
     @ManyToOne
     private Schnitzeljagd schnitzeljagdId;
@@ -88,6 +91,14 @@ public class Ziel implements Serializable {
         this.latitude = latitude;
     }
 
+    public Double getRadius() {
+        return radius;
+    }
+    
+    public void setRadius(Double radius) {
+        this.radius = radius;
+    }
+    
     public String getCode() {
         return code;
     }

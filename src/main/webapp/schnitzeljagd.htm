@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<script type="text/javascript" src="js/OpenLayers.light.js"></script>
 <script type="text/javascript" src="js/knockout-2.2.1.js"></script>
 <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
 <link rel="stylesheet" type="text/css" href="css/style.css"/>
@@ -13,6 +14,15 @@
 		<span data-bind="text: id"></span>: <input data-bind="value: name"></span>
 		<a data-bind="click: save" href="#">Save</a>
 		<a data-bind="click: remove" href="#">Remove</a>
+		<ul data-bind="foreach: ziele">
+			<li>
+				<span data-bind="text: id"></span>: <input data-bind="value: name"/><br/>
+				Long: <span data-bind="text: longitude"></span><br/>
+				Lat: <span data-bind="text: latitude"></span><br />
+				Radius: <span data-bind="text: radius"></span>
+			</li>
+		</ul>
+		<button data-bind="click: openAddZiel">Add Ziel</button>
 	</li>
 </ul>
 <h2>Add Schnitzeljagd</h2>
@@ -20,6 +30,18 @@
 	<input data-bind="value: newSchnitzeljagdName" placeholder="New Schnitzeljagd" />
 	<button type="submit">Add</button>
 </form>
+<div id="modal-background"></div>
+<div id="modal-content">
+<input data-bind="value: newZielName" placeholder="New Ziel"/><br/>
+	<div style="width: 50%; height:250px" id="map"></div>
+	<form data-bind="submit: addZiel">
+		Longitude: <span data-bind="text: newZielLongitude"></span><br/>
+		Latitude: <span data-bind="text: newZielLatitude"></span><br />
+		Radius: <input data-bind="value: newZielRadius"></input>
+		<button type="submit">Add</button>
+	</form>
+	<button id="modal-close">Close</button>
+</div>
 <script type="text/javascript" src="js/schnitzeljagd.js"></script>
 </body>
 </html>
