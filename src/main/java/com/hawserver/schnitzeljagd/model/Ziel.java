@@ -29,7 +29,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Ziel.findByLatitude", query = "SELECT z FROM Ziel z WHERE z.latitude = :latitude"),
     @NamedQuery(name = "Ziel.findByCode", query = "SELECT z FROM Ziel z WHERE z.code = :code"),
     @NamedQuery(name = "Ziel.findBySchnitzeljagdId", query = "SELECT z FROM Ziel z WHERE z.schnitzeljagdId = :schnitzeljagdId"),
-    @NamedQuery(name = "Ziel.deleteById", query = "DELETE FROM Ziel z WHERE z.id = :id")})
+    @NamedQuery(name = "Ziel.deleteById", query = "DELETE FROM Ziel z WHERE z.id = :id"),
+    @NamedQuery(name = "Ziel.deleteBySchnitzeljagdId", query = "DELETE FROM Ziel z WHERE z.schnitzeljagdId = :schnitzeljagdId")})
 public class Ziel implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

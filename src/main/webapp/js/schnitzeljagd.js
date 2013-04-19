@@ -17,32 +17,48 @@ OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {
 	},
 
 	trigger : function(e) {
-		var lonlat = map.getLonLatFromPixel(e.xy);
+		var lonlat = map.getLonLatFromPixel(e.xy).transform(map.getProjectionObject(),toProjection);
 		model.newZielLongitude(lonlat.lon);
 		model.newZielLatitude(lonlat.lat);
 	}
 
 });
 var map, layer;
+var toProjection = new OpenLayers.Projection("EPSG:4326");
 function initMap() {
 	map = new OpenLayers.Map('map');
 	layer = new OpenLayers.Layer.OSM("Simple OSM Map");
 	map.addLayer(layer);
-	map.setCenter(new OpenLayers.LonLat(-71.147, 42.472).transform(
-			new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject()),
+	map.setCenter(new OpenLayers.LonLat(10.023125410080803,  53.557128018418844).transform(
+			toProjection, map.getProjectionObject()),
 			12);
 	var click = new OpenLayers.Control.Click();
 	map.addControl(click);
 	click.activate();
 }
 
-function Ziel(data) {
+function Ziel(data,parent) {
 	var self = this;
 	self.id = ko.observable(data.id);
 	self.name = ko.observable(data.name);
 	self.longitude = ko.observable(data.longitude);
 	self.latitude = ko.observable(data.latitude);
 	self.radius = ko.observable(data.radius);
+	self.schnitzeljagdId = ko.observable(data.schnitzeljagdId);
+	self.code=ko.observable(data.code);
+	self.parent = parent;
+	self.remove = function() {
+		$.ajax({
+			type : "delete",
+			url : "rest/ziel/" + self.id(),
+			success : function() {
+				parent.ziele.remove(self);
+			},
+			error : function() {
+				alert("Could not remove Ziel");
+			}
+		});
+	};
 }
 
 function Schnitzeljagd(data) {
@@ -54,10 +70,23 @@ function Schnitzeljagd(data) {
 		model.newZielSchnitzeljagdId(self.id());
 		toggleModal();
 	}
+	
+	self.showZiele=ko.observable(true);
+	self.toggleZiele=function(){
+		self.showZiele(!self.showZiele());
+	};
+	self.toggleZieleText=ko.computed(function(){
+		return self.showZiele() ? "-":"+";
+	});
+	
+	
 	self.save = function() {
 		$.ajax({
 			type : "put",
-			data : ko.toJSON(self),
+			data : ko.toJSON({
+				id: self.id,
+				name: self.name,
+			}),
 			contentType : "application/json",
 			url : "rest/schnitzeljagd/" + self.id(),
 			error : function() {
@@ -85,7 +114,7 @@ function Schnitzeljagd(data) {
 		url : "rest/ziel/all/" + self.id(),
 		success : function(data) {
 			var mappedZiele = $.map(data, function(item) {
-				return new Ziel(item);
+				return new Ziel(item,self);
 			});
 			self.ziele(mappedZiele);
 		},
@@ -124,9 +153,10 @@ function AppViewModel() {
 			contentType : "application/json",
 			url : "rest/ziel",
 			success : function(data) {
-				$.grep(self.schnitzeljagden(), function(e) {
+				var schnitzeljagd=$.grep(self.schnitzeljagden(), function(e) {
 					return e.id() == data.schnitzeljagdId.id
-				})[0].ziele.push(new Ziel(data));
+				})[0];
+				schnitzeljagd.ziele.push(new Ziel(data,schnitzeljagd));
 				self.newZielName("");
 				toggleModal();
 			},

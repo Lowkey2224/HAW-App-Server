@@ -10,19 +10,18 @@
 <h1>Schnitzeljagd Administration</h1>
 <h2>Schnitzeljagden</h2>
 <ul data-bind="foreach: schnitzeljagden">
-	<li>
-		<span data-bind="text: id"></span>: <input data-bind="value: name"></span>
-		<a data-bind="click: save" href="#">Save</a>
-		<a data-bind="click: remove" href="#">Remove</a>
-		<ul data-bind="foreach: ziele">
+	<li class="schnitzeljagd">
+		<a class="toggle_ziele" href="#" data-bind="click: toggleZiele, text: toggleZieleText"></a>
+		<span class="id_text" data-bind="text: id"></span>: <input data-bind="value: name"></span>
+		<button data-bind="click: save" href="#">Save</button>
+		<button data-bind="click: remove" href="#">Remove</button>
+		<button data-bind="click: openAddZiel">Add Ziel</button>
+		<ul data-bind="visible: showZiele,foreach: ziele">
 			<li>
-				<span data-bind="text: id"></span>: <input data-bind="value: name"/><br/>
-				Long: <span data-bind="text: longitude"></span><br/>
-				Lat: <span data-bind="text: latitude"></span><br />
-				Radius: <span data-bind="text: radius"></span>
+				<p><span class="id_text" data-bind="text: id"></span>: <span class="ziel_name" data-bind="text: name"></span> <button data-bind="click: remove" href="#">Remove</button></p>
+				<p>Longitude: <span data-bind="text: longitude"></span>; Latitude: <span data-bind="text: latitude"></span>; Radius: <span data-bind="text: radius"></span>; Code: <span data-bind="text: code"></span></p>
 			</li>
 		</ul>
-		<button data-bind="click: openAddZiel">Add Ziel</button>
 	</li>
 </ul>
 <h2>Add Schnitzeljagd</h2>
@@ -32,15 +31,16 @@
 </form>
 <div id="modal-background"></div>
 <div id="modal-content">
-<input data-bind="value: newZielName" placeholder="New Ziel"/><br/>
-	<div style="width: 50%; height:250px" id="map"></div>
+	<h3>Add Ziel</h3>
+	<div id="map"  style="height:250px;width:50%;float:left;padding-right:5px"></div>
 	<form data-bind="submit: addZiel">
-		Longitude: <span data-bind="text: newZielLongitude"></span><br/>
-		Latitude: <span data-bind="text: newZielLatitude"></span><br />
-		Radius: <input data-bind="value: newZielRadius"></input>
-		<button type="submit">Add</button>
+		<p><label>Name:</label><input data-bind="value: newZielName" placeholder="New Ziel"/></p>
+		<p><label>Longitude:</label><span data-bind="text: newZielLongitude"></span></p>
+		<p><label> Latitude:</label> <span data-bind="text: newZielLatitude"></span></p>
+		<p><label> Radius:</label><input data-bind="value: newZielRadius"></input></p>
+		<p><button type="submit">Add</button></p>
 	</form>
-	<button id="modal-close">Close</button>
+	<div id="modal-footer"><button id="modal-close">Close</button></div>
 </div>
 <script type="text/javascript" src="js/schnitzeljagd.js"></script>
 </body>

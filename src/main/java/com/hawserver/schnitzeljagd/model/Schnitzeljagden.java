@@ -65,10 +65,15 @@ public class Schnitzeljagden {
         EntityManager em = ContextListener.createEntityManager();
         EntityTransaction transaction=em.getTransaction();
         transaction.begin();
-        TypedQuery<Schnitzeljagd> query = em.createNamedQuery(
+        Schnitzeljagd sj=getSchnitzeljagd(id);
+        TypedQuery<Ziel> zQuery=em.createNamedQuery(
+                "Ziel.deleteBySchnitzeljagdId", Ziel.class);
+        zQuery.setParameter("schnitzeljagdId", sj);
+        zQuery.executeUpdate();
+        TypedQuery<Schnitzeljagd> sjQuery = em.createNamedQuery(
                 "Schnitzeljagd.deleteById", Schnitzeljagd.class);
-        query.setParameter("id", id);
-        query.executeUpdate();
+        sjQuery.setParameter("id", id);
+        sjQuery.executeUpdate();
         transaction.commit();
         em.close();
     }
