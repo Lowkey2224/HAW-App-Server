@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebListener;
 import org.apache.log4j.Logger;
 
 import com.hawserver.mensaplan.model.MenuUpdateTask;
+import com.hawserver.veranstaltungsplan.DownloadScheduleTask;
 
 /**
  * The context listener deals with all issues regarding start and shutdown of the application.
@@ -36,6 +37,7 @@ public class ContextListener implements ServletContextListener {
         timer=new Timer();
         //@TODO: move to properties file for configuration
         timer.schedule(new MenuUpdateTask(), 0, 3600000);
+        timer.schedule(new DownloadScheduleTask(context.getRealPath("/")), 0, 3600000);
     }
 
     @Override
