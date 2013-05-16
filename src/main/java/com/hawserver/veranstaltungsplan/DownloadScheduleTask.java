@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 
 public class DownloadScheduleTask extends TimerTask {
 
-	private final String DEFAULT_SOURCE = "https://raw.github.com/Lowkey2224/HAW_App/master/README.md";
+	private final String DEFAULT_SOURCE = "http://www.informatik.haw-hamburg.de/fileadmin/Homepages/ProfPadberg/stundenplaene/Sem_I.txt";
 	private final String DEFAULT_DESTINATION = "files/Sem_I.txt";
 	private final String rootPath;
 	private final static Logger LOG = Logger
